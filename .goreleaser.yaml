@@ -13,7 +13,8 @@ builds:
       - -s -w
 
 archives:
-  - format: tar.gz
+  - formats:
+      - tar.gz
 
 nfpms:
   - maintainer: Toni Suominen <suominentoni@gmail.com>
@@ -24,7 +25,7 @@ nfpms:
       - deb
       - rpm
 
-brews:
+homebrew_casks:
   - repository:
       owner: suominentoni
       name: homebrew-tap
