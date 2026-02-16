@@ -1,0 +1,36 @@
+version: 2
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+
+archives:
+  - format: tar.gz
+
+nfpms:
+  - maintainer: Toni Suominen <suominentoni@gmail.com>
+    description: Filter stdin lines by range
+    homepage: https://github.com/suominentoni/row
+    license: MIT
+    formats:
+      - deb
+      - rpm
+
+brews:
+  - repository:
+      owner: suominentoni
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    homepage: https://github.com/suominentoni/row
+    description: Filter stdin lines by range
+
+changelog:
+  sort: asc
