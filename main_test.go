@@ -152,6 +152,50 @@ func TestRunCombinedFlags(t *testing.T) {
 	}
 }
 
+func TestRunNumber(t *testing.T) {
+	out, code := captureRun([]string{"-n", "3-5"}, lines(10))
+	if code != 0 {
+		t.Fatalf("exit code = %d, want 0", code)
+	}
+	want := "3: 3\n4: 4\n5: 5\n"
+	if out != want {
+		t.Errorf("output = %q, want %q", out, want)
+	}
+}
+
+func TestRunNumberMultiRange(t *testing.T) {
+	out, code := captureRun([]string{"-n", "2-3,8-9"}, lines(10))
+	if code != 0 {
+		t.Fatalf("exit code = %d, want 0", code)
+	}
+	want := "2: 2\n3: 3\n8: 8\n9: 9\n"
+	if out != want {
+		t.Errorf("output = %q, want %q", out, want)
+	}
+}
+
+func TestRunNumberWithHide(t *testing.T) {
+	out, code := captureRun([]string{"-nh", "3-5"}, lines(6))
+	if code != 0 {
+		t.Fatalf("exit code = %d, want 0", code)
+	}
+	want := "1: 1\n2: 2\n6: 6\n"
+	if out != want {
+		t.Errorf("output = %q, want %q", out, want)
+	}
+}
+
+func TestRunNumberWithHideMultiRange(t *testing.T) {
+	out, code := captureRun([]string{"-nh", "2-3,8-9"}, lines(10))
+	if code != 0 {
+		t.Fatalf("exit code = %d, want 0", code)
+	}
+	want := "1: 1\n4: 4\n5: 5\n6: 6\n7: 7\n10: 10\n"
+	if out != want {
+		t.Errorf("output = %q, want %q", out, want)
+	}
+}
+
 func TestRunNoArgs(t *testing.T) {
 	_, code := captureRun([]string{}, "")
 	if code != 1 {

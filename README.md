@@ -47,6 +47,7 @@ row [flags] <range>
 |------|-------------|
 | `-h`, `--hide` | Invert filter: hide matching lines |
 | `-s`, `--separator` | Print `---` between non-contiguous output segments |
+| `-n`, `--number` | Show line numbers |
 | `--help` | Show help |
 
 ## Examples
@@ -66,6 +67,13 @@ seq 1 100 | row 42
 
 # Print everything except lines 3-5
 seq 1 10 | row -h 3-5
+
+# Show line numbers
+seq 1 100 | row -n 5-8
+# 5: 5
+# 6: 6
+# 7: 7
+# 8: 8
 
 # Show non-contiguous ranges with separator
 seq 1 20 | row -s 3-5,10-12

@@ -23,6 +23,7 @@ Ranges:
 Flags:
   -h, --hide        invert filter: hide matching lines
   -s, --separator   print --- between non-contiguous output segments
+  -n, --number      show line numbers
   --help             show this help`
 
 func expandArgs(args []string) []string {
@@ -31,7 +32,7 @@ func expandArgs(args []string) []string {
 		if strings.HasPrefix(a, "-") && !strings.HasPrefix(a, "--") && len(a) > 2 {
 			allFlags := true
 			for _, c := range a[1:] {
-				if c != 'h' && c != 's' {
+				if c != 'h' && c != 's' && c != 'n' {
 					allFlags = false
 					break
 				}
@@ -43,6 +44,8 @@ func expandArgs(args []string) []string {
 						expanded = append(expanded, "-h")
 					case 's':
 						expanded = append(expanded, "-s")
+					case 'n':
+						expanded = append(expanded, "-n")
 					}
 				}
 				continue
@@ -57,6 +60,7 @@ func run(args []string, input *bufio.Scanner) int {
 	args = expandArgs(args)
 	hide := false
 	separator := false
+	number := false
 	var rangeArg string
 
 	for _, a := range args {
@@ -68,6 +72,8 @@ func run(args []string, input *bufio.Scanner) int {
 			hide = true
 		case "-s", "--separator":
 			separator = true
+		case "-n", "--number":
+			number = true
 		default:
 			if rangeArg != "" {
 				fmt.Fprintf(os.Stderr, "error: unexpected argument %q\n", a)
@@ -109,7 +115,12 @@ func run(args []string, input *bufio.Scanner) int {
 					return 0
 				}
 			}
-			_, err := fmt.Fprintln(writer, input.Text())
+			var err error
+			if number {
+				_, err = fmt.Fprintf(writer, "%d: %s\n", lineNum, input.Text())
+			} else {
+				_, err = fmt.Fprintln(writer, input.Text())
+			}
 			if err != nil {
 				return 0
 			}
