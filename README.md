@@ -48,6 +48,7 @@ row [flags] <range>
 | `-h`, `--hide` | Invert filter: hide matching lines |
 | `-s`, `--separator` | Print `---` between non-contiguous output segments |
 | `-n`, `--number` | Show line numbers |
+| `-v`, `--version` | Show version |
 | `--help` | Show help |
 
 ## Examples

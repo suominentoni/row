@@ -9,7 +9,12 @@ import (
 	"syscall"
 )
 
-const usage = `Usage: row [flags] <range>
+var version = "dev"
+
+func getUsage() string {
+	return `row ` + version + `
+
+Usage: row [flags] <range>
 
 Filter lines from stdin by line number ranges.
 
@@ -24,7 +29,9 @@ Flags:
   -h, --hide        invert filter: hide matching lines
   -s, --separator   print --- between non-contiguous output segments
   -n, --number      show line numbers
-  --help             show this help`
+  -v, --version     show version
+  --help            show this help`
+}
 
 func expandArgs(args []string) []string {
 	var expanded []string
@@ -65,8 +72,11 @@ func run(args []string, input *bufio.Scanner) int {
 
 	for _, a := range args {
 		switch a {
+		case "-v", "--version":
+			fmt.Println(version)
+			return 0
 		case "--help", "-?", "help":
-			fmt.Fprintln(os.Stderr, usage)
+			fmt.Fprintln(os.Stderr, getUsage())
 			return 0
 		case "-h", "--hide":
 			hide = true
@@ -84,7 +94,7 @@ func run(args []string, input *bufio.Scanner) int {
 	}
 
 	if rangeArg == "" {
-		fmt.Fprintln(os.Stderr, usage)
+		fmt.Fprintln(os.Stderr, getUsage())
 		return 1
 	}
 
