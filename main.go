@@ -26,11 +26,11 @@ Ranges:
   A,B,C    combine ranges with commas (e.g., 1-3,7,20...)
 
 Flags:
-  -h, --hide        invert filter: hide matching lines
+  -i, --invert      invert filter: print lines that don't match
   -s, --separator   print --- between non-contiguous output segments
   -n, --number      show line numbers
   -v, --version     show version
-  --help            show this help`
+  -h, --help        show this help`
 }
 
 func expandArgs(args []string) []string {
@@ -39,7 +39,7 @@ func expandArgs(args []string) []string {
 		if strings.HasPrefix(a, "-") && !strings.HasPrefix(a, "--") && len(a) > 2 {
 			allFlags := true
 			for _, c := range a[1:] {
-				if c != 'h' && c != 's' && c != 'n' {
+				if c != 'i' && c != 's' && c != 'n' {
 					allFlags = false
 					break
 				}
@@ -47,8 +47,8 @@ func expandArgs(args []string) []string {
 			if allFlags {
 				for _, c := range a[1:] {
 					switch c {
-					case 'h':
-						expanded = append(expanded, "-h")
+					case 'i':
+						expanded = append(expanded, "-i")
 					case 's':
 						expanded = append(expanded, "-s")
 					case 'n':
@@ -75,10 +75,10 @@ func run(args []string, input *bufio.Scanner) int {
 		case "-v", "--version":
 			fmt.Println(version)
 			return 0
-		case "--help", "-?", "help":
+		case "-h", "--help", "-?", "help":
 			fmt.Fprintln(os.Stderr, getUsage())
 			return 0
-		case "-h", "--hide":
+		case "-i", "--invert":
 			hide = true
 		case "-s", "--separator":
 			separator = true

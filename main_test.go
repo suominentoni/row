@@ -97,8 +97,8 @@ func TestRunSingleLineInput(t *testing.T) {
 	}
 }
 
-func TestRunHide(t *testing.T) {
-	out, code := captureRun([]string{"-h", "3-5"}, lines(10))
+func TestRunInvert(t *testing.T) {
+	out, code := captureRun([]string{"-i", "3-5"}, lines(10))
 	if code != 0 {
 		t.Fatalf("exit code = %d, want 0", code)
 	}
@@ -108,8 +108,8 @@ func TestRunHide(t *testing.T) {
 	}
 }
 
-func TestRunHideMultiRange(t *testing.T) {
-	out, code := captureRun([]string{"--hide", "1,10"}, lines(10))
+func TestRunInvertMultiRange(t *testing.T) {
+	out, code := captureRun([]string{"--invert", "1,10"}, lines(10))
 	if code != 0 {
 		t.Fatalf("exit code = %d, want 0", code)
 	}
@@ -142,7 +142,7 @@ func TestRunSeparatorContiguous(t *testing.T) {
 }
 
 func TestRunCombinedFlags(t *testing.T) {
-	out, code := captureRun([]string{"-hs", "3-5"}, lines(10))
+	out, code := captureRun([]string{"-is", "3-5"}, lines(10))
 	if code != 0 {
 		t.Fatalf("exit code = %d, want 0", code)
 	}
@@ -174,8 +174,8 @@ func TestRunNumberMultiRange(t *testing.T) {
 	}
 }
 
-func TestRunNumberWithHide(t *testing.T) {
-	out, code := captureRun([]string{"-nh", "3-5"}, lines(6))
+func TestRunNumberWithInvert(t *testing.T) {
+	out, code := captureRun([]string{"-ni", "3-5"}, lines(6))
 	if code != 0 {
 		t.Fatalf("exit code = %d, want 0", code)
 	}
@@ -185,8 +185,8 @@ func TestRunNumberWithHide(t *testing.T) {
 	}
 }
 
-func TestRunNumberWithHideMultiRange(t *testing.T) {
-	out, code := captureRun([]string{"-nh", "2-3,8-9"}, lines(10))
+func TestRunNumberWithInvertMultiRange(t *testing.T) {
+	out, code := captureRun([]string{"-ni", "2-3,8-9"}, lines(10))
 	if code != 0 {
 		t.Fatalf("exit code = %d, want 0", code)
 	}

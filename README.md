@@ -45,11 +45,11 @@ row [flags] <range>
 
 | Flag | Description |
 |------|-------------|
-| `-h`, `--hide` | Invert filter: hide matching lines |
+| `-i`, `--invert` | Invert filter: print lines that don't match |
 | `-s`, `--separator` | Print `---` between non-contiguous output segments |
 | `-n`, `--number` | Show line numbers |
 | `-v`, `--version` | Show version |
-| `--help` | Show help |
+| `-h`, `--help` | Show help |
 
 ## Examples
 
@@ -67,7 +67,7 @@ seq 1 100 | row 95...
 seq 1 100 | row 42
 
 # Print everything except lines 3-5
-seq 1 10 | row -h 3-5
+seq 1 10 | row -i 3-5
 
 # Show line numbers
 seq 1 100 | row -n 5-8
